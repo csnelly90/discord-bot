@@ -1,0 +1,26 @@
+{
+  "name": "dad-a-bot",
+  "version": "1.0.0",
+  "description": "A simple Discord bot to annoy your friends with dad jokes, memes and whatever you like.",
+  "main": "index.js",
+  "scripts": {
+    "test": "joke on"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/csnelly90/discord-bot.git"
+  },
+  "author": "csnelly90",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/csnelly90/discord-bot.git/issues"
+  },
+  "homepage": "https://github.com/csnelly90/discord-bot.git#readme",
+  "dependencies": {
+    "discord.js": "^14.7.1",
+    "dotenv": "^16.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^8.29.0"
+  }
+}
