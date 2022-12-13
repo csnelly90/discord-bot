@@ -1,6 +1,6 @@
 const path = require('node:path');
 const {Client, Collection, Events, GatewayIntentBits} = require('discord.js');
-const {commandsPath, commandFiles} = require('./common.js');
+const {commandsPath, commandFiles, eventsPath, eventFiles} = require('./common.js');
 require('dotenv').config();
 const token = process.env.TOKEN;
 
@@ -14,9 +14,10 @@ const client = new Client({
     ],
 });
 
-// extends native Map class, used to store and efficiently retrieve commands for execution
+// Extends native Map class, used to store and efficiently retrieve commands for execution
 client.commands = new Collection();
 
+// Set the commands found in the 'commands' directory
 for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
     const command = require(filePath);
@@ -28,31 +29,16 @@ for (const file of commandFiles) {
     }
 }
 
-// When the client is ready, run this code (only once)
-// 'c' as the event parameter stands for the 'client'
-client.once(Events.ClientReady, c => {
-        console.log(`DadABot on board! Logged in as ${c.user.tag}`);
+// Register the event listeners found in the 'events' directory
+for (const file of eventFiles) {
+    const filePath = path.join(eventsPath, file);
+    const event = require(filePath);
+    if (event.once) {
+        client.once(event.name, (...args) => event.execute(...args));
+    } else {
+        client.on(event.name, (...args) => event.execute(...args));
     }
-);
+}
 
-client.on(Events.InteractionCreate, async interaction => {
-        if (!interaction.isChatInputCommand()) return;
-
-        const command = interaction.client.commands.get(interaction.commandName);
-
-        if (!command) {
-            console.error(`No command matching ${interaction.commandName} was found.`);
-            return;
-        }
-
-        try {
-            await command.execute(interaction);
-        } catch (error) {
-            console.error(error);
-            await interaction.reply({content: 'There was an error while executing this command!', ephemeral: true});
-        }
-    }
-);
-
-// has to be last line in the file
+// Has to be last line in the file
 client.login(token);
