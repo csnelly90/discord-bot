@@ -27,7 +27,7 @@ module.exports = {
         // Utility class for construction and manipulation of embeds
         const embed = new EmbedBuilder()
             .setTitle('Your daily dose of red')
-            .setDescription(`Just to make things clear, this RED CONTENT was requested by ${userName}. ( ͡° ͜ʖ ͡°)`)
+            .setDescription(`Just to make things clear, this RED CONTENT was requested by ${userName}.\n( ͡° ͜ʖ ͡°)`)
             .setTimestamp(Date.now())
             .setURL('https://github.com/csnelly90')
             .setFooter({iconURL: interaction.user.displayAvatarURL(), text: interaction.user.tag});
